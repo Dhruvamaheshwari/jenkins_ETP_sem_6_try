@@ -1,7 +1,7 @@
 pipeline{
     agent any
 
-    trigger{
+    triggers{
         pollSCM "H/2 * * * *"
     }
 
@@ -32,14 +32,21 @@ pipeline{
             }
         }
 
+        stage("create the docker image")
+        {
+            steps{
+                bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+            }
+        }
+
         stage("push the image on docker hub")
         {
             steps{
                 withCredentials([
                     usernamePassword(
-                        credentialsId: "dockerhub"
-                        usernameVariable : "DOCKER_USERNAME"
-                        passwordVariable : "DOCKER_PASSWORD"
+                        credentialsId:"dockerhub"
+                        usernameVariable:"DOCKER_USERNAME"
+                        passwordVariable:"DOCKER_PASSWORD"
                     )
                 ]){bat """ 
                     echo %DOCKER_PASSWORD%| docker login -u %DOCKER_USERNAME% --password-stdin
