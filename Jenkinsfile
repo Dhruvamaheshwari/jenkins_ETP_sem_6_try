@@ -44,8 +44,8 @@ pipeline{
             steps{
                 withCredentials([
                     usernamePassword(
-                        credentialsId:"dockerhub"
-                        usernameVariable:"DOCKER_USERNAME"
+                        credentialsId:"dockerhub",
+                        usernameVariable:"DOCKER_USERNAME",
                         passwordVariable:"DOCKER_PASSWORD"
                     )
                 ]){bat """ 
