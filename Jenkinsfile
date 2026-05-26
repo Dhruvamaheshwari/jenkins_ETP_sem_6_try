@@ -13,6 +13,7 @@ pipeline{
         DOCKER_IMAGE = 'dhruvamaheshwari47/try_etp_sem_6'
         DOCKER_TAG = "latest"
         CONTAINER_NAME = 'etp_sem_6'
+        PORT = 4000
     }
 
     stages{
@@ -66,7 +67,7 @@ pipeline{
         stage("re_run the docker container")
         {
             steps{
-                bat "docker run -d -p ${port}:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                bat "docker run -d -p ${PORT}:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
     }
